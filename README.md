@@ -41,7 +41,7 @@ Blog Platform là một ứng dụng web cho phép người dùng đọc, tạo 
 
 1. **Clone repository**
 ```bash
-git clone [URL của repository của bạn]
+git clone https://github.com/PhanTDz/ptud-gk-de-1.git
 cd blog-platform
 ```
 
@@ -124,6 +124,3 @@ Nếu bạn gặp vấn đề hoặc có câu hỏi, vui lòng:
 - Tạo issue trong repository
 - Liên hệ qua email: thanhdat2022cltv@gmail.com
 
-## License
-[Loại license bạn sử dụng cho project]# ptud-gk-de-1
-# ptud-gk-de-1
