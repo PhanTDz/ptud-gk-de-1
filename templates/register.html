@@ -8,26 +8,22 @@
         {% if not g.user %}
             <form method="post">
                 <div class="form-group">
-                    <label for="username">
-                        <i class="fas fa-user"></i> Username
-                    </label>
-                    <input type="text" id="username" name="username" required>
+                    <label for="username">Tên đăng nhập</label>
+                    <input type="text" class="form-control" id="username" name="username" required>
                 </div>
                 <div class="form-group">
-                    <label for="password">
-                        <i class="fas fa-lock"></i> Password
-                    </label>
-                    <input type="password" id="password" name="password" required>
+                    <label for="password">Mật khẩu</label>
+                    <input type="password" class="form-control" id="password" name="password" required>
                 </div>
-                <div class="form-group" style="display: flex; align-items: center; gap: 0.5rem;">
-                    <input type="checkbox" id="is_actor" name="is_actor" style="width: auto;">
-                    <label for="is_actor" style="margin: 0;">
-                        <i class="fas fa-star"></i> Register as Actor
-                    </label>
+                <div class="form-group">
+                    <label for="confirm_password">Xác nhận mật khẩu</label>
+                    <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
                 </div>
-                <button type="submit" class="button primary" style="width: 100%">
-                    <i class="fas fa-user-plus"></i> Register
-                </button>
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="is_actor" name="is_actor">
+                    <label class="form-check-label" for="is_actor">Đăng ký tài khoản Actor</label>
+                </div>
+                <button type="submit" class="btn btn-primary">Đăng ký</button>
             </form>
             <p style="text-align: center; margin-top: 1rem;">
                 Already have an account? 
@@ -37,4 +33,33 @@
             <p>You are already registered and logged in.</p>
         {% endif %}
     </div>
+    <script>
+    document.getElementById('confirm_password').addEventListener('input', function() {
+        var password = document.getElementById('password').value;
+        var confirm = this.value;
+        
+        if (password !== confirm) {
+            this.setCustomValidity('Mật khẩu xác nhận không khớp!');
+        } else {
+            this.setCustomValidity('');
+        }
+    });
+
+    document.getElementById('password').addEventListener('input', function() {
+        var confirm = document.getElementById('confirm_password');
+        if (confirm.value) {
+            if (this.value !== confirm.value) {
+                confirm.setCustomValidity('Mật khẩu xác nhận không khớp!');
+            } else {
+                confirm.setCustomValidity('');
+            }
+        }
+        
+        if (this.value.length < 6) {
+            this.setCustomValidity('Mật khẩu phải có ít nhất 6 ký tự!');
+        } else {
+            this.setCustomValidity('');
+        }
+    });
+    </script>
 {% endblock %} 
