@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Platform</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="{{ url_for('home') }}" class="nav-logo">
+                <i class="fas fa-blog"></i>
+                BlogPlatform
+            </a>
+            <div class="nav-links">
+                <a href="{{ url_for('home') }}" class="nav-link">
+                    <i class="fas fa-home"></i> Home
+                </a>
+                {% if g.user %}
+                    {% if session.is_actor %}
+                        <a href="{{ url_for('create_post') }}" class="nav-link">
+                            <i class="fas fa-plus-circle"></i> Create Post
+                        </a>
+                    {% endif %}
+                    <a href="{{ url_for('my_saved_posts') }}" class="nav-link">
+                        <i class="fas fa-bookmark"></i> Saved Posts
+                    </a>
+                    <div class="user-menu">
+                        <span class="user-name">
+                            <i class="fas fa-user"></i> {{ g.user['username'] }}
+                        </span>
+                        <a href="{{ url_for('logout') }}" class="nav-link">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </a>
+                    </div>
+                {% else %}
+                    <a href="{{ url_for('login') }}" class="nav-link">
+                        <i class="fas fa-sign-in-alt"></i> Login
+                    </a>
+                    <a href="{{ url_for('register') }}" class="nav-link highlight">
+                        <i class="fas fa-user-plus"></i> Register
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">
+                        {{ message }}
+                        <button class="alert-close">&times;</button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2024 BlogPlatform. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Close alert messages
+        document.querySelectorAll('.alert-close').forEach(button => {
+            button.addEventListener('click', () => {
+                button.parentElement.style.display = 'none';
+            });
+        });
+    </script>
+</body>
+</html> 

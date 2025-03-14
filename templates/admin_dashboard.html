@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block content %}
+    <div class="admin-dashboard">
+        <h1 style="text-align: center; margin-bottom: 30px; color: var(--primary-color);">
+            <i class="fas fa-user-shield"></i> Admin Dashboard
+        </h1>
+        <h2 style="text-align: center; margin-bottom: 30px; color: var(--secondary-color);">
+            <i class="fas fa-users"></i> User Management
+        </h2>
+        <div class="card">
+            <ul class="user-list">
+                {% for user in users %}
+                    <li class="user-item">
+                        <div class="user-info">
+                            <strong>
+                                <i class="fas fa-user"></i> {{ user.username }}
+                            </strong>
+                            {% if user.is_admin %}
+                                <span style="color: var(--secondary-color);">
+                                    <i class="fas fa-user-shield"></i> Admin
+                                </span>
+                            {% endif %}
+                            {% if user.is_blocked %}
+                                <span style="color: var(--accent-color);">
+                                    <i class="fas fa-ban"></i> Blocked
+                                </span>
+                            {% endif %}
+                        </div>
+                        <div class="user-actions">
+                            <form action="{{ url_for('block_user', user_id=user.id) }}" method="GET" style="display: inline;">
+                                <button type="submit" class="btn {% if user.is_blocked %}btn-success{% else %}btn-danger{% endif %}">
+                                    <i class="fas {% if user.is_blocked %}fa-unlock{% else %}fa-ban{% endif %}"></i>
+                                    {{ 'Unblock' if user.is_blocked else 'Block' }}
+                                </button>
+                            </form>
+                            <form action="{{ url_for('reset_password', user_id=user.id) }}" method="POST" style="display: inline;">
+                                <div style="display: flex; gap: 10px; align-items: center;">
+                                    <input type="password" name="new_password" placeholder="New password" required>
+                                    <button type="submit" class="btn">
+                                        <i class="fas fa-key"></i> Reset Password
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% endblock %} 

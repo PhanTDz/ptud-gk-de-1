@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="page-header">
+        <h1><i class="fas fa-bookmark"></i> Saved Posts</h1>
+    </div>
+
+    {% if posts %}
+        <div class="posts-grid">
+            {% for post in posts %}
+                <div class="post-card">
+                    <div class="post-image">
+                        <img src="{{ post.image_url }}" alt="{{ post.title }}">
+                    </div>
+                    <div class="post-content">
+                        <h2 class="post-title">{{ post.title }}</h2>
+                        <p class="post-meta">
+                            <i class="fas fa-user"></i> {{ post.username }} | 
+                            <i class="fas fa-clock"></i> {{ post.created_at|format_datetime }}
+                        </p>
+                        <p class="post-excerpt">{{ post.content[:150] }}...</p>
+                        <div class="post-stats">
+                            <span><i class="fas fa-users"></i> {{ post.follow_count }} followers</span>
+                        </div>
+                        <div class="post-actions">
+                            <a href="{{ url_for('post_detail', post_id=post.id) }}" class="button primary">
+                                <i class="fas fa-book-reader"></i> Read More
+                            </a>
+                            <a href="{{ url_for('save_post', post_id=post.id) }}" class="button delete">
+                                <i class="fas fa-bookmark-slash"></i> Unsave
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="empty-state">
+            <i class="fas fa-bookmark fa-3x"></i>
+            <h2>No Saved Posts</h2>
+            <p>You haven't saved any posts yet.</p>
+            <a href="{{ url_for('home') }}" class="button primary">
+                <i class="fas fa-home"></i> Browse Posts
+            </a>
+        </div>
+    {% endif %}
+</div>
+{% endblock %} 

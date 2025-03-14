@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}Register{% endblock %}
+
+{% block content %}
+    <div class="form-container">
+        <h2><i class="fas fa-user-plus"></i> Register</h2>
+        {% if not g.user %}
+            <form method="post">
+                <div class="form-group">
+                    <label for="username">
+                        <i class="fas fa-user"></i> Username
+                    </label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">
+                        <i class="fas fa-lock"></i> Password
+                    </label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <div class="form-group" style="display: flex; align-items: center; gap: 0.5rem;">
+                    <input type="checkbox" id="is_actor" name="is_actor" style="width: auto;">
+                    <label for="is_actor" style="margin: 0;">
+                        <i class="fas fa-star"></i> Register as Actor
+                    </label>
+                </div>
+                <button type="submit" class="button primary" style="width: 100%">
+                    <i class="fas fa-user-plus"></i> Register
+                </button>
+            </form>
+            <p style="text-align: center; margin-top: 1rem;">
+                Already have an account? 
+                <a href="{{ url_for('login') }}" style="color: #2563eb;">Login here</a>
+            </p>
+        {% else %}
+            <p>You are already registered and logged in.</p>
+        {% endif %}
+    </div>
+{% endblock %} 
